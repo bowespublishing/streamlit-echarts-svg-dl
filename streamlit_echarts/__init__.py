@@ -1,4 +1,5 @@
-import os
+# import os
+from pathlib import Path
 from typing import Dict
 from typing import Optional
 from typing import Union
@@ -8,15 +9,15 @@ import streamlit.components.v1 as components
 from pyecharts.charts.base import Base
 from pyecharts.charts.base import default
 
-_RELEASE = False  # on packaging, pass this to True
-
+parent = Path(__file__).parent
+_RELEASE =not parent.joinpath('DEBUG').exists()  # on packaging, pass this to True
+# print(_RELEASE)
 if not _RELEASE:
     _component_func = components.declare_component(
         "st_echarts", url="http://localhost:3001",
     )
-else:
-    parent_dir = os.path.dirname(os.path.abspath(__file__))
-    build_dir = os.path.join(parent_dir, "frontend/build")
+else:    
+    build_dir = parent.joinpath("frontend/build").absolute().__str__()
     _component_func = components.declare_component("st_echarts", path=build_dir)
 
 
