@@ -6,7 +6,7 @@ authors = [
     {name = "Fanilo ANDRIANASOLO", email = "andfanilo@gmail.com"},
 ]
 dependencies = ["pyecharts >= 1.9", "simplejson >= 3.0", "streamlit >= 0.63"]
-requires-python = ">=3.6"
+requires-python = ">=3.9"
 readme = "README.md"
 classifiers = []
 
@@ -26,6 +26,14 @@ streamlit_echarts = ["DEBUG"]
 where = ["."]  # ["."] by default
 include = ["streamlit_echarts*"]  # ["*"] by default
 namespaces = false  # true by default
+
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "build>=0.9.0",
+    "prompt-toolkit>=3.0.3",
+    "tomlkit>=0.11.6",
+]
 
 [build-system]
 requires = [
