@@ -1,5 +1,21 @@
 # Streamlit - ECharts
 
+This is a fork repo of streamlit_echarts. Major changes to upstream:  
+
+1. bump echarts to v5.4.2
+1. bump react to v18
+1. bump react-scripts to v4
+1. `React.memo` component for performance, since `streamlit.setComponentValue` always rerender parent,but props not changed actually,React shallow compare treat a new object not equal to old one even their values are equal.
+1. add notMerge param to func, mannually handle this,but with default value True
+1. update python build system, use pyproject.toml to manage info, use pdm as venv manager.
+
+
+**Since I Changed too much deps , versions, mechanism, it's not easy to be accepted by origin Repo. I won't create pull request to origin repo recently, and will not publish to pypi as another pkg. If you are interesting in this repo ,pls install through `pip install git+https://github.com/CyberQin/streamlit-echarts5.git`**  
+
+# README.md from upstream
+
+The content of the original README.md is retained below!
+
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/andfanilo/streamlit-echarts-demo/master/app.py)
 
 A Streamlit component to display [ECharts](https://echarts.apache.org/en/index.html).
@@ -71,6 +87,7 @@ st_echarts(
     options: Dict
     theme: Union[str, Dict]
     events: Dict[str, str]
+    notMerge: bool = True
     height: str
     width: str
     renderer: str
