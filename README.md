@@ -5,12 +5,13 @@ This is a fork repo of streamlit_echarts. Major changes to upstream:
 1. bump echarts to v5.4.2
 1. bump react to v18
 1. bump react-scripts to v4
+1. remove `React.useCallback` since it is out of rules of hooks,it not recommend in loop or conditional. use normal callback to events ,but with `React.memo(EchartsChart)` to avoid event failling. It's seems good for all demo now,but not tested yet when event callback and props really change  at the same time
 1. `React.memo` component for performance, since `streamlit.setComponentValue` always rerender parent,but props not changed actually,React shallow compare treat a new object not equal to old one even their values are equal.
 1. add notMerge param to func, mannually handle this,but with default value True
 1. update python build system, use pyproject.toml to manage info, use pdm as venv manager.
 
 
-**Since I Changed too much deps , versions, mechanism, it's not easy to be accepted by origin Repo. I won't create pull request to origin repo recently, and will not publish to pypi as another pkg. If you are interesting in this repo ,pls install through `pip install git+https://github.com/CyberQin/streamlit-echarts5.git`**  
+**Since I Changed too much deps , versions, mechanism, it's not tested egnough and not easy to be accepted by origin Repo. I won't create pull request to origin repo recently, and will not publish to pypi as another pkg. If you are interesting in this repo ,pls install through `pip install git+https://github.com/CyberQin/streamlit-echarts5.git`**  
 
 # README.md from upstream
 
