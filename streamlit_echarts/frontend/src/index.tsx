@@ -1,12 +1,13 @@
 import React from "react"
-import ReactDOM from "react-dom"
-import EchartsChart from "./EchartsChart"
+import ReactDOM from "react-dom/client"
+import EchartsMemo from "./EchartsChart"
 
 import "./index.css"
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root')!);
+
+root.render(
   <React.StrictMode>
-    <EchartsChart />
-  </React.StrictMode>,
-  document.getElementById("root")
+    <EchartsMemo />
+  </React.StrictMode>
 )
