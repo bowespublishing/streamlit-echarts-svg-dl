@@ -46,6 +46,7 @@ def st_echarts(
     options: Dict,
     theme: Union[str, Dict] = "",
     events: Dict[str, str] = None,
+    notMerge:bool=True,
     height: str = "300px",
     width: str = "100%",
     renderer: str = "canvas",
@@ -63,6 +64,8 @@ def st_echarts(
     events: Dict
         Dictionary of mouse events to string JS functions. 
         Don't wrap values with JsCode placeholder.
+    notMerge: bool
+        manually set Merge,default True,
     height: str
         Height of ECharts chart
     width: Image
@@ -81,6 +84,7 @@ def st_echarts(
         options=options,
         theme=theme,
         onEvents={k: JsCode(v).js_code for k, v in events.items()},
+        notMerge=notMerge,
         height=height,
         width=width,
         renderer=renderer,
@@ -88,7 +92,6 @@ def st_echarts(
         key=key,
         default=None,
     )
-
 
 def st_pyecharts(
     chart: Base,
