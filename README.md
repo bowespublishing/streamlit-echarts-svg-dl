@@ -1,21 +1,19 @@
-# Streamlit - ECharts
+# Streamlit - ECharts5
 
-This is a fork repo of streamlit_echarts. Major changes to upstream:  
-
-1. bump echarts to v5.4.2
+This is a fork repo of [streamlit_echarts](https://share.streamlit.io/andfanilo/streamlit-echarts). Major changes to upstream:  
+1. rename package to `streamlit-echarts5`, you need to rename all import namespaces`
+1. bump echarts to v5.5.1
 1. bump react to v18
-1. bump react-scripts to v4
+1. bump `react-scripts` to v5.0.1
 1. remove `React.useCallback` since it is out of rules of hooks,it not recommend in loop or conditional. use normal callback to events ,but with `React.memo(EchartsChart)` to avoid event failling. It's seems good for all demo now,but not tested yet when event callback and props really change  at the same time
 1. `React.memo` component for performance, since `streamlit.setComponentValue` always rerender parent,and give a set props to a new object,but props not changed actually,React shallow compare treat a new object not equal to old one even their values are equal.eg`props = {...props}` will call rerender. No rerender in the two examples about events。
 1. add notMerge param to func, mannually handle this,but with default value True
 1. update python build system, use pyproject.toml to manage info, use pdm as venv manager.
 
 
-**Since I Changed too much deps , versions, mechanism, it's not tested egnough and not easy to be accepted by origin Repo. I won't create pull request to origin repo recently, and will not publish to pypi as another pkg. If you are interesting in this repo ,pls install through `pip install git+https://github.com/CyberQin/streamlit-echarts5.git`**  
+**Since I Changed too much deps , versions, mechanism, it's not tested egnough and not easy to be accepted by origin Repo. I won't create pull request to origin repo recently,but publish to pypi as `streamlit-echarts5`.  
+I won't frequently update this repository. If you have new feature request,try fork this repo when no response from issues**  
 
-# README.md from upstream
-
-The content of the original README.md is retained below!
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/andfanilo/streamlit-echarts-demo/master/app.py)
 
@@ -26,7 +24,7 @@ A Streamlit component to display [ECharts](https://echarts.apache.org/en/index.h
 ## Install
 
 ```shell script
-pip install streamlit-echarts
+pip install streamlit-echarts5
 ```
 
 ## Usage
@@ -41,7 +39,7 @@ Check out the [demo](https://share.streamlit.io/andfanilo/streamlit-echarts-demo
 **st_echarts example**
 
 ```python
-from streamlit_echarts import st_echarts
+from streamlit_echarts5 import st_echarts
 
 options = {
     "xAxis": {
@@ -61,7 +59,7 @@ st_echarts(options=options)
 ```python
 from pyecharts import options as opts
 from pyecharts.charts import Bar
-from streamlit_echarts import st_pyecharts
+from streamlit_echarts5 import st_pyecharts
 
 b = (
     Bar()
@@ -175,7 +173,7 @@ The JS code needs to be a one-liner. You can use Javascript minifiers like https
 - **map** : register a map using the dedicated `Map` class
 
 ```python
-from streamlit_echarts import Map
+from streamlit_echarts5 import Map
 with open("USA.json", "r") as f:
     map = Map(
         "USA",
@@ -228,8 +226,8 @@ npm install
 - Python side
 
 ```shell script
-conda create -n streamlit-echarts python=3.7
-conda activate streamlit-echarts
+conda create -n streamlit-echarts5 python=3.12
+conda activate streamlit-echarts5
 pip install -e .
 ```
 
@@ -241,17 +239,32 @@ Both webpack dev server and Streamlit need to run for development mode.
 
 ```shell script
 cd frontend
-npm run start
+npm run dev
 ```
 
 - Python side
 
-Demo example is on https://github.com/andfanilo/streamlit-echarts-demo.
+Demo example is on https://github.com/andfanilo/streamlit-echarts-demo. But you need to change all import module from `streamlit_echarts` to `streamlit_echarts5`
+
 
 ```shell script
 git clone https://github.com/andfanilo/streamlit-echarts-demo
 cd streamlit-echarts-demo/
+# After you replace the import module,then run next shell
 streamlit run app.py
+```
+
+## build package
+- Build frontend
+```shell script
+cd frontend
+npm run build
+```
+- Build wheel
+```shell script
+# cd to project root
+# ensure python env have 'build' installed
+python -m build
 ```
 
 ## Caveats
@@ -332,7 +345,3 @@ without remounting the component, check for examples `examples/app_pyecharts.py`
 ## Credits
 
 - It's really a wrapper around [echarts-for-react](https://github.com/hustcc/echarts-for-react).
-
-# Support me
-
-<a href="https://www.buymeacoffee.com/andfanilo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>

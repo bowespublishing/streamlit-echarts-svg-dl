@@ -10,7 +10,8 @@ from pyecharts.charts.base import Base
 from pyecharts.charts.base import default
 
 parent = Path(__file__).parent
-_RELEASE =not parent.joinpath('DEBUG').exists()  # on packaging, pass this to True
+_RELEASE = not parent.joinpath("./DEBUG").exists()
+
 # print(_RELEASE)
 if not _RELEASE:
     _component_func = components.declare_component(
@@ -138,3 +139,5 @@ def st_pyecharts(
         map=map,
         key=key,
     )
+
+# TODO 添加更多预设图

@@ -1,9 +1,9 @@
 [project]
-name = "streamlit-echarts"
-version = "0.5.4"
+name = "streamlit-echarts5"
+version = "1.0.0"
 description = "Echarts5 custom component for Streamlit"
 authors = [
-    {name = "Fanilo ANDRIANASOLO", email = "andfanilo@gmail.com"},
+    {name = "Qin Hu", email = "hu578344563@hotmail.com"},
 ]
 dependencies = ["pyecharts >= 1.9", "simplejson >= 3.0", "streamlit >= 0.63"]
 requires-python = ">=3.9"
@@ -11,7 +11,7 @@ readme = "README.md"
 classifiers = []
 
 [project.urls]
-Homepage = "https://github.com/andfanilo/streamlit-echarts"
+Homepage = "https://github.com/CyberQin/streamlit-echarts5"
 
 
 [tool.setuptools]
@@ -19,12 +19,13 @@ Homepage = "https://github.com/andfanilo/streamlit-echarts"
 include-package-data = true
 
 [tool.setuptools.exclude-package-data]
-streamlit_echarts = ["DEBUG"]
+streamlit_echarts5 = ["DEBUG","__pycache__"]
+
 
 [tool.setuptools.packages.find]
 # All the following settings are optional:
 where = ["."]  # ["."] by default
-include = ["streamlit_echarts*"]  # ["*"] by default
+include = ["streamlit_echarts5*"]  # ["*"] by default
 namespaces = false  # true by default
 
 

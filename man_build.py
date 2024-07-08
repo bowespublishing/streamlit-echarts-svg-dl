@@ -18,14 +18,9 @@ if __name__=="__main__":
             io.seek(0)
             io.truncate()
             dump(py_toml,io)
-            with open(current.joinpath('streamlit_echarts/frontend/package.json'),mode='r+',encoding='utf8') as js:
+            with open(current.joinpath('streamlit_echarts5/frontend/package.json'),mode='r+',encoding='utf8') as js:
                 conf = json.load(js)
                 conf['version']=new_ver
                 js.seek(0)
                 js.truncate()
-                json.dump(conf,js,indent=2)                
-    
-    os.chdir(current.joinpath('streamlit_echarts/frontend'))
-    subprocess.run(['npm','run','build'])
-    os.chdir(current)
-    subprocess.run(['python','-m','build'])
+                json.dump(conf,js,indent=2)
