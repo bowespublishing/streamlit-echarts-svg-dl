@@ -1,3 +1,14 @@
+# Streamlit ECharts5 with SVG download
+
+This is a fork of streamlit_echarts5 which in turn is a fork of streamlit_echarts. I needed a quick hacky way to download the SVG... hence the fork
+
+Nothing has really changed other than edits to the index.html to 'pass' back the SVG file to streamlit. Renderer must be SVG for obvious reasons.
+
+result = st_echarts(options=option, events=events,renderer='svg', width=500px, height=500px, key="echarts_svg")
+st.download_button('Download SVG', data=result, file_name='chart.svg', mime='image/svg+xml')
+
+
+
 # Streamlit - ECharts5
 
 This is a fork repo of [streamlit_echarts](https://share.streamlit.io/andfanilo/streamlit-echarts). Major changes to upstream:  
