@@ -139,5 +139,3 @@ def st_pyecharts(
         map=map,
         key=key,
     )
-
-# TODO 添加更多预设图
