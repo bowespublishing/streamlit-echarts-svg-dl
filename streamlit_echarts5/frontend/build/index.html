@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="theme-color" content="#000000"/>
+  <meta name="description" content="Streamlit Echarts"/>
+  <title>Streamlit Component</title>
+  <script defer="defer" src="./static/js/main.da120fc3.js"></script>
+  <link href="./static/css/main.1ce7c80b.css" rel="stylesheet">
+  <style>
+    #root {
+      overflow: auto;
+      height: 550px;
+      display: grid;
+      place-items: center;
+    }
+  </style>
+</head>
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root">
+    <!-- The chart will be dynamically rendered here -->
+  </div>
+
+  <script>
+    let previousSvgContent = '';
+    let checkInterval = null;
+
+    // Function to send the SVG data back to Streamlit
+    function sendChartToStreamlit() {
+      const chartDiv = document.querySelector('#root svg'); // Assuming chart is rendered as an SVG
+      if (chartDiv) {
+        const serializer = new XMLSerializer();
+        const svgData = serializer.serializeToString(chartDiv);
+
+        // Check if the SVG content has changed
+        if (svgData !== previousSvgContent) {
+          previousSvgContent = svgData;
+
+          // Send the SVG data back to Streamlit
+          if (window.parent) {
+            window.parent.postMessage({
+              isStreamlitMessage: true,
+              type: 'streamlit:setComponentValue',
+              value: svgData,
+              dataType: 'svg'
+            }, '*');
+          }
+        }
+      } else {
+        console.error('Chart not found!');
+      }
+    }
+
+    // Function to continuously check if rendering is complete
+    function checkRenderingCompletion() {
+      const chartDiv = document.querySelector('#root svg');
+      if (chartDiv) {
+        const currentSvgContent = chartDiv.outerHTML;
+
+        // If the SVG content hasn't changed over a few checks, assume it's fully rendered
+        if (previousSvgContent === currentSvgContent) {
+          clearInterval(checkInterval);
+          sendChartToStreamlit();
+        } else {
+          previousSvgContent = currentSvgContent;
+        }
+      }
+    }
+
+    // Automatically trigger the function when the SVG is updated
+    document.addEventListener('DOMContentLoaded', function() {
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          const chartDiv = document.querySelector('#root svg'); // Assuming chart is rendered as an SVG
+          if (chartDiv && mutation.target === chartDiv) {
+            // Start checking for rendering completion
+            clearInterval(checkInterval); // Clear any previous intervals
+            checkInterval = setInterval(checkRenderingCompletion, 100); // Check every 100ms
+          }
+        });
+      });
+
+      // Observe the #root div for changes to the SVG element
+      observer.observe(document.getElementById('root'), { childList: true, subtree: true, characterData: true });
+    });
+  </script>
+</body>
+</html>
