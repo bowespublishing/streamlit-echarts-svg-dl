@@ -8,10 +8,13 @@
   <title>Streamlit Component</title>
   <script defer="defer" src="./static/js/main.da120fc3.js"></script>
   <link href="./static/css/main.1ce7c80b.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
   <style>
     #root {
       overflow: auto;
-      height: 550px;
+      height: 650px;
       display: grid;
       place-items: center;
     }
@@ -26,6 +29,25 @@
   <script>
     let previousSvgContent = '';
     let checkInterval = null;
+
+    // Function to adjust overflow of the inner chart container
+    function adjustChartOverflow() {
+      const chartContainer = document.querySelector('.echarts-for-react > div'); // Target the inner div within the echarts container
+      if (chartContainer) {
+        chartContainer.style.overflow = 'auto'; // Change overflow from hidden to auto
+      }
+    }
+
+    // Function to adjust the SVG height based on its content
+    function adjustSvgHeight() {
+      const svgElement = document.querySelector('#root svg'); // Select the SVG element
+      if (svgElement) {
+        // Calculate the bounding box of the SVG content
+        const bbox = svgElement.getBBox();
+        // Set the SVG height based on the bounding box height
+        svgElement.style.height = `${bbox.height}px`;
+      }
+    }
 
     // Function to send the SVG data back to Streamlit
     function sendChartToStreamlit() {
@@ -63,6 +85,8 @@
         if (previousSvgContent === currentSvgContent) {
           clearInterval(checkInterval);
           sendChartToStreamlit();
+          adjustChartOverflow(); // Adjust overflow after rendering is complete
+          adjustSvgHeight(); // Adjust SVG height based on content
         } else {
           previousSvgContent = currentSvgContent;
         }
@@ -71,13 +95,18 @@
 
     // Automatically trigger the function when the SVG is updated
     document.addEventListener('DOMContentLoaded', function() {
+      adjustChartOverflow(); // Adjust overflow once initially
+      adjustSvgHeight(); // Adjust SVG height once initially
+
       const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
           const chartDiv = document.querySelector('#root svg'); // Assuming chart is rendered as an SVG
           if (chartDiv && mutation.target === chartDiv) {
+            adjustChartOverflow(); // Adjust overflow when mutations are observed
+            adjustSvgHeight(); // Adjust SVG height when mutations are observed
             // Start checking for rendering completion
             clearInterval(checkInterval); // Clear any previous intervals
-            checkInterval = setInterval(checkRenderingCompletion, 100); // Check every 100ms
+            checkInterval = setInterval(checkRenderingCompletion, 200); // Check every 200ms
           }
         });
       });
